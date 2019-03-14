@@ -8,6 +8,5 @@ def drawCoSystem(x,y):
         for yy in range(y):
             print(str(xx) + '/' + str (yy))
             coords[xx,yy] = [xx,yy]
-           
 
-    print(coords)
+    return coords
