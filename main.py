@@ -1,5 +1,6 @@
 import pygame
-import CoSystem
+import CoDrawService
+import CoDataService
 import numpy as np
 
 pygame.init()
@@ -12,23 +13,15 @@ GREEN = (  0, 255,   0)
 RED =   (255,   0,   0) 
 
 running = True
-size = [400, 300]
+size = [600, 500]
 factor = 40
 biasX = 20
 biasY = 20
-coords = CoSystem.drawCoSystem(9,6)
 
-print(coords)
+xDim = 4
+yDim = 3
 
-if len(coords.shape) != 3:
-    #TODO: throw exception
-    print('something went wrong!!')
-    coords = []
-else:
-    xDim = coords.shape[0]
-    yDim = coords.shape[1]
-
-print(coords.shape)
+points = CoDataService.getPoints(xDim,yDim)
 
 while running:
     for event in pygame.event.get():
@@ -37,14 +30,8 @@ while running:
    
     shell = pygame.display.set_mode(size)
     shell.fill(WHITE)
-    
-    #pygame.draw.line(shell, BLACK, [0, 0], [50,30], 5)
-    pygame.draw.circle(shell, BLUE, [60, 250], 2)
 
-    for x in range(xDim):
-        for y in range(yDim):            
-            pygame.draw.circle(shell, BLUE, [x*factor + biasX, y*factor + biasY], 2)
-
+    CoDrawService.drawCoordSystem(shell,xDim,yDim)
 
     pygame.display.flip()
 
