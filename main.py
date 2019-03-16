@@ -23,6 +23,18 @@ yDim = 3
 
 points = CoDataService.getPoints(xDim,yDim)
 
+#init
+CoDataService.setSouthEastNeighbours(points)
+CoDataService.setRandomPredictionPoints(points,xDim,yDim)
+
+
+xxx = CoDataService.findPoint(points,1,1)
+
+for c in range(len(xxx.neighbours)):
+    print('x: ' + str(xxx.neighbours[c].x) + ' y: ' + str( xxx.neighbours[c].y))
+
+
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -32,6 +44,13 @@ while running:
     shell.fill(WHITE)
 
     CoDrawService.drawCoordSystem(shell,xDim,yDim)
+    
+    for d in range(len(points)):
+        CoDrawService.drawPoint(shell,points[d])
+
+    CoDrawService.drawPointConnections(shell,CoDataService.findPoint(points,1,1))
+
+
 
     pygame.display.flip()
 
