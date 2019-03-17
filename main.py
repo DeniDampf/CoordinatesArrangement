@@ -1,6 +1,8 @@
 import pygame
-import CoDrawService
-import CoDataService
+import Services.CoDrawService as CoDrawService
+import Services.CoDataService as CoDataService
+import Services.TrainingService as TrainingService
+
 import numpy as np
 
 pygame.init()
@@ -13,7 +15,7 @@ GREEN = (  0, 255,   0)
 RED =   (255,   0,   0) 
 
 running = True
-size = [600, 500]
+size = [1400, 1000]
 factor = 40
 biasX = 20
 biasY = 20
@@ -27,12 +29,13 @@ points = CoDataService.getPoints(xDim,yDim)
 CoDataService.setSouthEastNeighbours(points)
 CoDataService.setRandomPredictionPoints(points,xDim,yDim)
 
+trainingModel = TrainingService.TrainingService(points)
+trainingModel.createModel()
 
 xxx = CoDataService.findPoint(points,1,1)
 
 for c in range(len(xxx.neighbours)):
     print('x: ' + str(xxx.neighbours[c].x) + ' y: ' + str( xxx.neighbours[c].y))
-
 
 
 while running:
@@ -48,7 +51,8 @@ while running:
     for d in range(len(points)):
         CoDrawService.drawPoint(shell,points[d])
 
-    CoDrawService.drawPointConnections(shell,CoDataService.findPoint(points,1,1))
+    for point in points:        
+        CoDrawService.drawPointConnections(shell,point)
 
 
 
