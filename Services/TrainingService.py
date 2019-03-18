@@ -16,10 +16,12 @@ class TrainingService:
         model.add(Dense(32, input_dim=2, activation='relu'))
         model.add(Dense(1, activation='sigmoid')) 
 
-        #Compeliert das Model, damit es spaeter verwendet werden kann
-        model.compile(loss='mean_squared_error',optimizer='adam',metrics=['accuracy']) 
 
-        #Trainiert das Model mit den Eingangs- und den entsprechenden Ausgangswerten fuer 500 Epochen
-        model.fit(x=self.Eingangswerte,y=self.Ausgangswerte,epochs=500,verbose=0)
-        #Testet die Eingangsdaten und schreibt die Ergebnisse in die Console
-        print(model.predict(self.Eingangswerte)) 
+        model.compile(loss='mean_squared_error',optimizer='rmsprop',metrics=['accuracy']) 
+
+        for i in range(10):
+
+            model.fit(x=self.Eingangswerte,y=self.Ausgangswerte,epochs=150,verbose=0)
+
+            print('- - - - - - - -  - - - - - -  - -- -  - - - -' + str(i))
+            print(model.predict(self.Eingangswerte))
