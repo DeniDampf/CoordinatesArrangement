@@ -20,8 +20,8 @@ factor = 40
 biasX = 20
 biasY = 20
 
-xDim = 4
-yDim = 3
+xDim = 3
+yDim = 2
 
 points = CoDataService.getPoints(xDim,yDim)
 
@@ -29,19 +29,31 @@ points = CoDataService.getPoints(xDim,yDim)
 CoDataService.setSouthEastNeighbours(points)
 CoDataService.setRandomPredictionPoints(points,xDim,yDim)
 
-trainingModel = TrainingService.TrainingService(points)
-trainingModel.createModel()
+# for point in points:
+#     point.printCoordinate()
 
-xxx = CoDataService.findPoint(points,1,1)
 
-for c in range(len(xxx.neighbours)):
-    print('x: ' + str(xxx.neighbours[c].x) + ' y: ' + str( xxx.neighbours[c].y))
+trainingModel = TrainingService.TrainingService(points,xDim,yDim)
+
+
+trainingModel.predictCoordsModel()
+trainingModel.trainCoordsModel()
+trainingModel.predictCoordsModel()
+
+
 
 
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+        if event.type == pygame.KEYDOWN:
+            #SPACE pressed?
+            if event.key == 32:
+                print('Thanks for pressing SPACE')
+                trainingModel.trainCoordsModel()
+                trainingModel.predictCoordsModel()
    
     shell = pygame.display.set_mode(size)
     shell.fill(WHITE)
@@ -53,8 +65,6 @@ while running:
 
     for point in points:        
         CoDrawService.drawPointConnections(shell,point)
-
-
 
     pygame.display.flip()
 

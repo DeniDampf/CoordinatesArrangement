@@ -7,7 +7,7 @@ def getPoints(xDim,yDim):
     points = []
     for x in range(xDim):
         for y in range(yDim):
-            c = cModel.Coordinate(x,y)
+            c = cModel.Coordinate(x,y,xDim,yDim)
             points.append(c)
 
     return points
