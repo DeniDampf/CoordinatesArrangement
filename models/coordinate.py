@@ -10,7 +10,7 @@ class Coordinate:
         self.yNormalized = y / (yDim - 1)
 
         self.xPredNormalized = 0
-        self.yPredNormalized = 0
+        self.yPredNormalized = 0 
 
         self.xPredDenormalized = self.xPredNormalized * (xDim -1)
         self.yPredDenormalized = self.yPredNormalized * (yDim -1)

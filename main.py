@@ -59,7 +59,7 @@ while running:
     shell.fill(WHITE)
 
     CoDrawService.drawCoordSystem(shell,xDim,yDim)
-    
+     
     for d in range(len(points)):
         CoDrawService.drawPoint(shell,points[d])
 

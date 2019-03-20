@@ -66,7 +66,7 @@ class TrainingService:
     
 
 
-    def predictCoordsModel(self):
+    def predictCoordsModel(self): 
 
         for coordinate in self.points:
             print(str(self.coordsModel.predict( np.array([[coordinate.xNormalized,coordinate.yNormalized]]))) + '  -  ' + str(coordinate.x) + ' / ' + str( coordinate.y))

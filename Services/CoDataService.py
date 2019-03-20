@@ -16,7 +16,7 @@ def setSouthEastNeighbours(points):
     
     for i in range(len(points)):
         coordinate = points[i]
-
+ 
         neighbourSouth = findPoint(points,coordinate.x,coordinate.y -1)
 
         if neighbourSouth != None:
