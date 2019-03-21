@@ -1,5 +1,6 @@
-from keras.layers import Dense,Input
+from keras.layers import Dense,Input,Dropout
 from keras.models import Sequential 
+from keras.initializers import RandomUniform
 
 import numpy as np 
 
@@ -11,36 +12,27 @@ class TrainingService:
         self.xDim = xDim
         self.yDim = yDim
 
-        self.Eingangswerte = np.array([[0,0],[0,1],[1,0],[1,1]])
-        self.Ausgangswerte = np.array([[0],[1],[1],[0]]) 
-
-    def createModel(self):
-        #pass
-        model = Sequential()
-        model.add(Dense(32, input_dim=2, activation='relu'))
-        model.add(Dense(1, activation='sigmoid')) 
-
-
-        model.compile(loss='mean_squared_error',optimizer='rmsprop',metrics=['accuracy']) 
-
-        for i in range(10):
-
-            model.fit(x=self.Eingangswerte,y=self.Ausgangswerte,epochs=150,verbose=0)
-
-            print('- - - - - - - -  - - - - - -  - -- -  - - - -' + str(i))
-            print(model.predict(self.Eingangswerte))
-
     def createCoordsModel(self):
-        #pass
+  
         self.coordsModel = Sequential()
-        self.coordsModel.add(Dense(32, input_dim=2, activation='relu'))
-        self.coordsModel.add(Dense(2, activation='sigmoid'))
         
+        #First Layer
+        # self.coordsModel.add(Dense(24, input_dim=2, activation='relu',kernel_initializer=RandomUniform(minval=-0.9, maxval=0.9, seed=None)))
+        self.coordsModel.add(Dense(24, input_dim=2, activation='relu'))
+        self.coordsModel.add(Dropout(0.2))
+
+        #Second Layer
+        # self.coordsModel.add(Dense(4, input_dim=2, activation='sigmoid',kernel_initializer=RandomUniform(minval=-0.9, maxval=0.9, seed=None)))
+        # self.coordsModel.add(Dropout(0.4))
+        
+        self.coordsModel.add(Dense(2, activation='sigmoid'))
+
         self.coordsModel.compile(loss='mean_squared_error',optimizer='rmsprop',metrics=['accuracy'])  
 
+        print(self.coordsModel.summary())
+
     def trainCoordsModel(self):
-        #self.coordsModel.fit(x=self.Eingangswerte,y=self.Ausgangswerte,epochs=30,verbose=0)
-        
+
         inputArray = np.zeros((len(self.points),2))
         outputArray = np.zeros((len(self.points),2))
 
@@ -56,17 +48,14 @@ class TrainingService:
             tmpOArray[1] =self.points[idx].yNormalized
 
             inputArray[idx] = tmpArray
-            outputArray[idx] = tmpOArray
-
-        #print('InputArray: ')
-        #print(inputArray)           
+            outputArray[idx] = tmpOArray        
             
-        self.coordsModel.fit(x=inputArray,y=outputArray,epochs=5,verbose=0)
-
-    
-
+        self.coordsModel.fit(x=inputArray,y=outputArray,epochs=2,verbose=0)
 
     def predictCoordsModel(self): 
 
         for coordinate in self.points:
-            print(str(self.coordsModel.predict( np.array([[coordinate.xNormalized,coordinate.yNormalized]]))) + '  -  ' + str(coordinate.x) + ' / ' + str( coordinate.y))
+            prediction = self.coordsModel.predict( np.array([[coordinate.xNormalized,coordinate.yNormalized]]))
+            
+            coordinate.xPredNormalized = prediction[0,0]
+            coordinate.yPredNormalized = prediction[0,1]

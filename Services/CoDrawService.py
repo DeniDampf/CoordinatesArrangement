@@ -3,7 +3,7 @@ import numpy as np
 import pygame
 
 
-factor = 100
+factor = 30
 biasX = 20
 biasY = 20
 
@@ -21,14 +21,20 @@ def drawCoordSystem(display,xDim,yDim):
 
 
 def drawPoint(display,point):
-    pygame.draw.circle(display, RED, [int(point.xPrediction*factor + biasX),int(point.yPrediction*factor + biasY)], 3)
+
+
+    predCoordsDenormalized = point.getPredictionDenormalized()
+    pygame.draw.circle(display, RED, [int(predCoordsDenormalized[0] * factor + biasX),int(predCoordsDenormalized[1] * factor + biasY)], 3)
+
 
 def drawPointConnections(display,point):
       
 
     for neighbour in point.neighbours: 
-        pointCoords = coordToInt([point.xPrediction,point.yPrediction])
-        neighbourCoords = coordToInt([neighbour.xPrediction,neighbour.yPrediction])
+        pointCoords = coordToInt(point.getPredictionDenormalized())
+        neighbourCoords = coordToInt(neighbour.getPredictionDenormalized())
+        #pointCoords = coordToInt([point.xPrediction,point.yPrediction])
+        #neighbourCoords = coordToInt([neighbour.xPrediction,neighbour.yPrediction])
         pygame.draw.line(display, BLACK,pointCoords,neighbourCoords, 1)
         
 def coordToInt(coord):   

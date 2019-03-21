@@ -16,32 +16,19 @@ RED =   (255,   0,   0)
 
 running = True
 size = [1400, 1000]
-factor = 40
-biasX = 20
-biasY = 20
 
-xDim = 3
-yDim = 2
+
+xDim = 40    
+yDim = 30
 
 points = CoDataService.getPoints(xDim,yDim)
 
 #init
 CoDataService.setSouthEastNeighbours(points)
-CoDataService.setRandomPredictionPoints(points,xDim,yDim)
-
-# for point in points:
-#     point.printCoordinate()
 
 
 trainingModel = TrainingService.TrainingService(points,xDim,yDim)
-
-
 trainingModel.predictCoordsModel()
-trainingModel.trainCoordsModel()
-trainingModel.predictCoordsModel()
-
-
-
 
 while running:
     for event in pygame.event.get():
@@ -49,7 +36,7 @@ while running:
             running = False
 
         if event.type == pygame.KEYDOWN:
-            #SPACE pressed?
+            #SPACE pressed
             if event.key == 32:
                 print('Thanks for pressing SPACE')
                 trainingModel.trainCoordsModel()
