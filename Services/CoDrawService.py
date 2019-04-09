@@ -22,19 +22,16 @@ def drawCoordSystem(display,xDim,yDim):
 
 def drawPoint(display,point):
 
-
     predCoordsDenormalized = point.getPredictionDenormalized()
     pygame.draw.circle(display, RED, [int(predCoordsDenormalized[0] * factor + biasX),int(predCoordsDenormalized[1] * factor + biasY)], 3)
 
 
-def drawPointConnections(display,point):
-      
+def drawPointConnections(display,point):      
 
     for neighbour in point.neighbours: 
         pointCoords = coordToInt(point.getPredictionDenormalized())
         neighbourCoords = coordToInt(neighbour.getPredictionDenormalized())
-        #pointCoords = coordToInt([point.xPrediction,point.yPrediction])
-        #neighbourCoords = coordToInt([neighbour.xPrediction,neighbour.yPrediction])
+
         pygame.draw.line(display, BLACK,pointCoords,neighbourCoords, 1)
         
 def coordToInt(coord):   

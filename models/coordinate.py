@@ -8,6 +8,7 @@ class Coordinate:
         self.xDim = xDim
         self.yDim = yDim
 
+        # TODO: Helper class
         self.xNormalized = x / (xDim - 1)
         self.yNormalized = y / (yDim - 1)
 

@@ -22,13 +22,10 @@ def setSouthEastNeighbours(points):
         if neighbourSouth != None:
             coordinate.neighbours.append(neighbourSouth)
 
-
         neighbourEast = findPoint(points,coordinate.x+1,coordinate.y)
 
         if neighbourEast != None:
             coordinate.neighbours.append(neighbourEast)
-
-
 
 def findPoint(points,x,y):
     
